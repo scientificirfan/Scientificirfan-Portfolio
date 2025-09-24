@@ -385,6 +385,12 @@
                             </div>
                         </div>
                         <div>
+                            <span class="font-semibold">Web Development</span>
+                            <div class="w-full bg-gray-700 rounded-full h-2.5 mt-1">
+                                <div class="skill-progress bg-indigo-500 h-2.5 rounded-full" data-skill="80" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div>
                             <span class="font-semibold">LaTeX</span>
                             <div class="w-full bg-gray-700 rounded-full h-2.5 mt-1">
                                 <div class="skill-progress bg-indigo-500 h-2.5 rounded-full" data-skill="90" style="width: 0%"></div>
@@ -574,6 +580,7 @@
                             <i class="fas fa-envelope text-indigo-400 text-xl"></i>
                             <div>
                                 <strong>Email:</strong> <a href="mailto:irfanhawkingirfan@gmail.com" class="text-gray-300 hover:text-indigo-400">irfanhawkingirfan@gmail.com</a>
+    <strong>Email:</strong> <span id="obfuscated-email" class="text-gray-300 hover:text-indigo-400 cursor-pointer"></span>
                             </div>
                         </div>
                         <div class="flex items-center gap-4">
@@ -615,7 +622,7 @@
                 <p class="mb-6">Exploring the universe, one equation at a time.</p>
                 <div class="flex justify-center space-x-6 text-gray-400">
                     <a href="https://www.linkedin.com/in/scientific-irfan" target="_blank" class="hover:text-white"><i class="fab fa-linkedin text-2xl"></i></a>
-                    <a href="mailto:irfanhawkingirfan@gmail.com" class="hover:text-white"><i class="fas fa-envelope text-2xl"></i></a>
+                    <span id="footer-obfuscated-email" class="hover:text-white cursor-pointer"><i class="fas fa-envelope text-2xl"></i></span>
                 </div>
             </div>
             <div class="text-center text-gray-500 mt-8 border-t border-gray-800 pt-6">
@@ -631,12 +638,31 @@
     
     <!-- JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <!-- EmailJS SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
 
     <!-- Consolidated JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- Email Obfuscation ---
+            // This protects your email from simple bots scraping the HTML
+            const emailSpan = document.getElementById('obfuscated-email');
+            const footerEmailSpan = document.getElementById('footer-obfuscated-email');
+            const user = 'irfanhawkingirfan';
+            const domain = 'gmail.com';
+            const email = user + '@' + domain;
+            if (emailSpan) {
+                emailSpan.textContent = email;
+                emailSpan.addEventListener('click', () => {
+                    window.location.href = 'mailto:' + email;
+                });
+            }
+            if (footerEmailSpan) {
+                footerEmailSpan.title = email;
+                footerEmailSpan.addEventListener('click', () => {
+                    window.location.href = 'mailto:' + email;
+                });
+            }
+            // --- End Email Obfuscation ---
             
             // --- Loading Screen ---
             const loadingScreen = document.getElementById('loading-screen');
@@ -866,5 +892,9 @@
             animateParticles();
         });
     </script>
+    <!--
+    Security Note: If you deploy this site on your own server, add the following HTTP header to prevent clickjacking:
+    X-Frame-Options: DENY
+    -->
 </body>
 </html>
