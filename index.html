@@ -364,7 +364,18 @@
                     <div class="relative w-64 h-64 sm:w-80 sm:h-80 mx-auto">
                         <div class="absolute inset-0 bg-indigo-500 rounded-full blur-2xl opacity-40"></div>
                                 <div class="absolute inset-0 border-2 border-indigo-500 rounded-full flex items-center justify-center overflow-hidden bg-white">
-                                       <img src="image/Scientificirfan.png" alt="Scientific Irfan" class="object-cover w-full h-full rounded-full" />
+                                       <img src="image/Scientificirfan.png" alt="Scientific Irfan" class="object-cover w-full h-full rounded-full animate-float" />
+    <style>
+        /* ...existing styles... */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-24px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 3.5s ease-in-out infinite;
+        }
+    </style>
                                 </div>
                     </div>
                 </div>
