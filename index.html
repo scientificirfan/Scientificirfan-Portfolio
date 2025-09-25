@@ -22,6 +22,50 @@
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
     <style>
+        /* Dark/Light mode styles */
+        body.light {
+            background-color: #f9fafb;
+            color: #22223b;
+        }
+        body.light .bg-gray-900,
+        body.light .bg-black,
+        body.light .bg-gray-800,
+        body.light .bg-gray-700 {
+            background-color: #f3f4f6 !important;
+        }
+        body.light .text-gray-300,
+        body.light .text-white {
+            color: #22223b !important;
+        }
+        body.light .border-gray-800,
+        body.light .border-gray-700 {
+            border-color: #e5e7eb !important;
+        }
+        body.light .hover\:bg-gray-800:hover,
+        body.light .hover\:bg-gray-700:hover {
+            background-color: #e5e7eb !important;
+        }
+        body.light .bg-indigo-600 {
+            background-color: #6366f1 !important;
+        }
+        body.light .bg-green-600 {
+            background-color: #22c55e !important;
+        }
+        body.light .bg-indigo-700 {
+            background-color: #4338ca !important;
+        }
+        body.light .bg-green-700 {
+            background-color: #15803d !important;
+        }
+        body.light .text-indigo-400 {
+            color: #6366f1 !important;
+        }
+        body.light .text-yellow-400 {
+            color: #eab308 !important;
+        }
+        body.light .shadow-lg {
+            box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+        }
         /* Custom styles for components and animations that are complex for Tailwind alone */
         body {
             font-family: 'Inter', sans-serif;
@@ -189,7 +233,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-300">
+<body class="bg-gray-900 text-gray-300 transition-colors duration-500" id="body-root">
     <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="text-center">
@@ -204,6 +248,12 @@
     <!-- Navigation Bar -->
     <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Dark/Light Mode Toggle Button -->
+            <button id="theme-toggle" class="mr-4 text-2xl focus:outline-none" title="Toggle dark/light mode">
+                <span class="sr-only">Colour mode</span>
+                <i id="theme-toggle-icon" class="fas fa-moon text-yellow-400"></i>
+                <span class="ml-2 text-base font-semibold align-middle hidden sm:inline">Colour mode</span>
+            </button>
             <a href="#home" class="text-xl font-bold flex items-center space-x-2 text-white">
                 <i class="fas fa-atom text-indigo-400"></i>
                 <span>Scientific Irfan</span>
@@ -215,6 +265,7 @@
                 <a href="#experience" class="hover:text-indigo-400 transition">Experience</a>
                 <a href="#contact" class="hover:text-indigo-400 transition">Contact</a>
     <a href="#my-tech-projects" class="hover:text-indigo-400 transition">My Tech Projects</a>
+    <a href="#blog" class="hover:text-indigo-400 transition">Blog</a>
             </div>
             <button id="nav-toggle" class="md:hidden text-2xl">
                 <i class="fas fa-bars"></i>
@@ -228,6 +279,7 @@
              <a href="#experience" class="block py-3 px-6 hover:bg-gray-800">Experience</a>
              <a href="#contact" class="block py-3 px-6 hover:bg-gray-800">Contact</a>
     <a href="#my-tech-projects" class="block py-3 px-6 hover:bg-gray-800">My Tech Projects</a>
+    <a href="#blog" class="block py-3 px-6 hover:bg-gray-800">Blog</a>
         </div>
     </nav>
 
@@ -254,6 +306,24 @@
             </div>
         </div>
 
+    </section>
+
+    <!-- Blog/Articles Section -->
+    <section id="blog" class="py-20 bg-black bg-opacity-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 text-white" data-aos="fade-up">Blog & Articles</h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-8">
+                    <!-- Example Article Card -->
+                    <div class="bg-gray-800 p-8 rounded-xl shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="text-2xl font-bold text-indigo-400 mb-2">Welcome to My Blog!</h3>
+                        <p class="text-gray-300 mb-4">This is where I’ll share articles, tutorials, and thoughts on physics, coding, and science communication. Stay tuned for new posts!</p>
+                        <span class="inline-block bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <!-- Add more article cards here as you write new posts -->
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- My Tech Projects Section -->
@@ -630,6 +700,35 @@
     <!-- Consolidated JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- Dark/Light Mode Toggle ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-toggle-icon');
+            const bodyRoot = document.getElementById('body-root');
+            // Check localStorage for theme
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                themeIcon.classList.remove('text-yellow-400');
+                themeIcon.classList.add('text-indigo-600');
+            }
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light');
+                const isLight = document.body.classList.contains('light');
+                if (isLight) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    themeIcon.classList.remove('text-yellow-400');
+                    themeIcon.classList.add('text-indigo-600');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    themeIcon.classList.remove('text-indigo-600');
+                    themeIcon.classList.add('text-yellow-400');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
             // --- Email Obfuscation ---
             // This protects your email from simple bots scraping the HTML
             const emailSpan = document.getElementById('obfuscated-email');
